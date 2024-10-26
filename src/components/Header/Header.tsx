@@ -1,38 +1,34 @@
-import { FC } from 'react';
+import {FC} from 'react';
 
 import s from './Header.module.scss';
 
 import logoUrl from '../../assets/svg/dog-svgrepo-com.svg';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {
-  DASHBOARD_PATH,
-  EXPORT_PATH,
-  IMPORT_PATH,
-  TASKS_PATH,
+    CONSTRUCTOR,
+    SOURCE_EDIT,
+    UPLOAD_DATA
 } from '../../pathes';
 
 const Header: FC = () => {
-  return (
-    <header className={s.header}>
-      <img alt="Перейти в дашбоард" src={logoUrl} />
-      <nav>
-        <li>
-          <ul>
-            <Link to={DASHBOARD_PATH}>Дашбоард</Link>
-          </ul>
-          <ul>
-            <Link to={TASKS_PATH}>Задачи</Link>
-          </ul>
-          <ul>
-            <Link to={IMPORT_PATH}>Импорт</Link>
-          </ul>
-          <ul>
-            <Link to={EXPORT_PATH}>Экспорт</Link>
-          </ul>
-        </li>
-      </nav>
-    </header>
-  );
+    return (
+        <header className={s.header}>
+            <img alt="Перейти в дашбоард" src={logoUrl}/>
+            <nav>
+                <li>
+                    <ul>
+                        <Link to={UPLOAD_DATA}>Загрузить данные</Link>
+                    </ul>
+                    <ul>
+                        <Link to={SOURCE_EDIT}>Управление исходными данными</Link>
+                    </ul>
+                    <ul>
+                        <Link to={CONSTRUCTOR}>Констркутор</Link>
+                    </ul>
+                </li>
+            </nav>
+        </header>
+    );
 };
 
-export { Header };
+export {Header};

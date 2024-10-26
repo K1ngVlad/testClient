@@ -1,33 +1,20 @@
-import { Dashboard, Export, Import, Root, Tasks } from './pages';
-import {
-  DASHBOARD_PATH,
-  EXPORT_PATH,
-  IMPORT_PATH,
-  ROOT_PATH,
-  TASKS_PATH,
-} from './pathes';
+import {Import, Root} from './pages';
+import {SourceDataEdit} from "./pages/source-data-edit";
+import {ROOT_PATH, SOURCE_EDIT, UPLOAD_DATA} from './pathes';
 
 const routes = [
-  {
-    path: ROOT_PATH,
-    Component: Root,
-  },
-  {
-    path: DASHBOARD_PATH,
-    Component: Dashboard,
-  },
-  {
-    path: IMPORT_PATH,
-    Component: Import,
-  },
-  {
-    path: EXPORT_PATH,
-    Component: Export,
-  },
-  {
-    path: TASKS_PATH,
-    Component: Tasks,
-  },
+    {
+        path: ROOT_PATH,
+        Component: Root,
+    },
+    {
+        path: UPLOAD_DATA,
+        Component: Import,
+    },
+    {
+        path: SOURCE_EDIT,
+        Component: SourceDataEdit,
+    }
 ];
 
-export { routes };
+export {routes};
