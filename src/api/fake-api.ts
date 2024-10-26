@@ -1,3 +1,4 @@
+import { ParsedFiles } from '../entities';
 import { TaskPriority, TaskResolution, Tasks, TaskStatus } from '../types';
 
 class FakeApi {
@@ -28,10 +29,60 @@ class FakeApi {
     },
   ];
 
+  parsedFiles: ParsedFiles = [
+    {
+      fileName: 'Мега файл',
+      columns: [
+        {
+          columnName: 'ID',
+          values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        {
+          columnName: 'Имя',
+          values: [
+            'Влад',
+            'Максим',
+            'Валера',
+            'Илья',
+            'Дмитрий',
+            'Файл',
+            'Ладно',
+            'Зачем',
+          ],
+        },
+        {
+          columnName: 'Фамилия',
+          values: [
+            'Влад',
+            'Максим',
+            'Валера',
+            'Илья',
+            'Дмитрий',
+            'Файл',
+            'Ладно',
+            'Зачем',
+          ],
+        },
+        {
+          columnName: 'Часы в доте',
+          values: [32, 4234, 12324, 43, 0, 99, 100],
+        },
+      ],
+    },
+  ];
+
   getAllTasks(): Promise<Tasks> {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(this.tasks);
+      }, this.delay);
+    });
+  }
+
+  getParsedFiles(): Promise<ParsedFiles> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(this.parsedFiles);
       }, this.delay);
     });
   }

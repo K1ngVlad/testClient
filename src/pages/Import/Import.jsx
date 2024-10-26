@@ -18,11 +18,13 @@ const Import = () => {
       formData.append(file.name, file);
     });
 
-    axios.post('upload_file', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    axios.get('http://81.177.165.152:7233/api/test');
+
+    // axios.post('https://81.177.165.152:7233/api/test', formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // });
   };
 
   const deleteFile = (i) => {
