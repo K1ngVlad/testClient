@@ -1,6 +1,6 @@
-import { Button, MenuItem, Stack } from '@mui/material';
-import axios from 'axios';
-import { FC, useState } from 'react';
+import { Button, MenuItem, Stack } from "@mui/material";
+import axios from "axios";
+import { FC, useState } from "react";
 
 const Import = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -10,22 +10,27 @@ const Import = () => {
     setSelectedFiles((files) => [...files, event.target.files[0]]);
   };
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData();
 
     selectedFiles.forEach((file) => {
-      formData.append(file.name, file);
+      formData.append("files", file);
     });
 
-    axios.get('http://81.177.165.152:7233/api/test');
+    //axios.get("https://localhost:7233/api/import");
 
-    // axios.post('https://81.177.165.152:7233/api/test', formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // });
+    const data = await axios.post(
+      "https://localhost:7233/api/import",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    console.log(data);
   };
 
   const deleteFile = (i) => {
@@ -44,14 +49,14 @@ const Import = () => {
             style={{
               height: 300,
               width: 300,
-              position: 'relative',
+              position: "relative",
             }}
           >
             <input
               style={{
-                width: '100%',
-                height: '100%',
-                cursor: 'pointer',
+                width: "100%",
+                height: "100%",
+                cursor: "pointer",
               }}
               accept=".csv"
               onChange={add}
@@ -59,19 +64,19 @@ const Import = () => {
             />
             <div
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: 0,
                 left: 0,
-                width: '100%',
-                height: '100%',
-                background: 'grey',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
+                width: "100%",
+                height: "100%",
+                background: "grey",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
                 fontSize: 20,
-                textAlign: 'center',
-                pointerEvents: 'none',
+                textAlign: "center",
+                pointerEvents: "none",
               }}
             >
               Нажмите сюда или перенесите файлы
@@ -88,16 +93,16 @@ const Import = () => {
               {selectedFiles.map((file, i) => (
                 <MenuItem
                   sx={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'space-between',
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
                   }}
                   key={Math.random()}
                 >
                   <span
                     style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
                     }}
                   >
                     {file.name}
@@ -120,7 +125,9 @@ const Import = () => {
             </Stack>
           </div>
           <hr />
-          <Button variant="contained">Отправить</Button>
+          <Button type="submit" variant="contained">
+            Отправить
+          </Button>
         </form>
       </div>
     </main>
