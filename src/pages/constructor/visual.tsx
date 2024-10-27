@@ -5,11 +5,11 @@ import {
   TableCell,
   TableHead,
   TableRow,
-} from '@mui/material';
-import { FC } from 'react';
-import { optionStore, parsedFileStore } from '../../store';
-import { Section, SectionType } from '../../entities/options';
-import { observer } from 'mobx-react-lite';
+} from "@mui/material";
+import { FC } from "react";
+import { optionStore, parsedFileStore } from "../../store";
+import { Section, SectionType } from "../../entities/options";
+import { observer } from "mobx-react-lite";
 
 interface Props {
   ref?: any;
@@ -22,7 +22,7 @@ const Visual: FC<Props> = observer((props) => {
 
     for (let i = 0; i < table.length; i++) {
       if (i === 4 && i + 1 < table.length) {
-        const name = 'Другое';
+        const name = "Другое";
         let value = 0;
         for (; i < table.length; i++) {
           const currentValue =
@@ -52,7 +52,7 @@ const Visual: FC<Props> = observer((props) => {
     <Box
       ref={props.ref}
       component="section"
-      sx={{ p: 2, width: 800, backgroundColor: 'white' }}
+      sx={{ p: 2, width: 800, backgroundColor: "white" }}
     >
       {optionStore.sections.map((section) => (
         <Box key={section.id} component="section" sx={{ p: 2 }}>
@@ -60,14 +60,14 @@ const Visual: FC<Props> = observer((props) => {
             <div>
               <p
                 style={{
-                  whiteSpace: 'pre',
+                  whiteSpace: "pre",
                 }}
               >
                 {section.content}
               </p>
             </div>
           ) : section.type === SectionType.TABLE ? (
-            typeof section.content.choisenTable === 'number' ? (
+            typeof section.content.choisenTable === "number" ? (
               <div>
                 <Table>
                   <TableHead>
@@ -107,35 +107,35 @@ const Visual: FC<Props> = observer((props) => {
                 </Table>
               </div>
             ) : (
-              ''
+              ""
             )
           ) : section.type === SectionType.HISTOGRAM ? (
-            typeof section.content.choisenTable === 'number' &&
+            typeof section.content.choisenTable === "number" &&
             section.content.valueCol !== null &&
             section.content.nameCol !== null ? (
               <Box
                 height={500}
-                display={'flex'}
-                alignItems={'flex-end'}
-                justifyContent={'flex-start'}
+                display={"flex"}
+                alignItems={"flex-end"}
+                justifyContent={"flex-start"}
               >
                 {getSortedValues(section).map((values) => (
                   <Box
                     height={values.value / values.maxValue}
                     width={100}
                     sx={{
-                      backgroundColor: 'tomato',
-                      color: 'white',
+                      backgroundColor: "tomato",
+                      color: "white",
                       marginLeft: 6,
-                      position: 'relative',
+                      position: "relative",
                     }}
                   >
                     <div
                       style={{
-                        position: 'absolute',
+                        position: "absolute",
                         left: 0,
                         bottom: -20,
-                        color: 'black',
+                        color: "black",
                       }}
                     >
                       {values.name}
@@ -144,15 +144,15 @@ const Visual: FC<Props> = observer((props) => {
                 ))}
               </Box>
             ) : (
-              ''
+              ""
             )
           ) : (
-            ''
+            ""
           )}
           <hr
             style={{
               height: 2,
-              background: 'rgba(0, 0, 0, 0.2)',
+              background: "rgba(0, 0, 0, 0.2)",
               marginTop: 30,
             }}
           />
