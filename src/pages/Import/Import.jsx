@@ -1,6 +1,7 @@
 import { Button, MenuItem, Stack } from "@mui/material";
 import axios from "axios";
 import { FC, useState } from "react";
+import { parsedFileStore } from "../../store";
 
 const Import = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -31,6 +32,8 @@ const Import = () => {
       }
     );
     console.log(data);
+
+    parsedFileStore.addFiels(data.data);
   };
 
   const deleteFile = (i) => {

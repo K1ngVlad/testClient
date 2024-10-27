@@ -23,15 +23,15 @@ import {
   TableHead,
   TableRow,
   TextField,
-} from '@mui/material';
-import { observer } from 'mobx-react-lite';
-import { FC, useEffect, useState } from 'react';
-import { optionStore, parsedFileStore } from '../../store';
-import { Section, SectionType } from '../../entities/options';
+} from "@mui/material";
+import { observer } from "mobx-react-lite";
+import { FC, useEffect, useState } from "react";
+import { optionStore, parsedFileStore } from "../../store";
+import { Section, SectionType } from "../../entities/options";
 
-import { usePDF } from 'react-to-pdf';
-import { bottom } from '@popperjs/core';
-import { Visual } from './visual';
+import { usePDF } from "react-to-pdf";
+import { bottom } from "@popperjs/core";
+import { Visual } from "./visual";
 
 // import * as Docx from 'docx';
 // import * as ok from 'react-docx';
@@ -42,10 +42,10 @@ import { Visual } from './visual';
 
 const Constructor = observer(() => {
   const [dialog, setDialog] = useState(false);
-  const [sectionType, setSectionType] = useState('0');
+  const [sectionType, setSectionType] = useState("0");
   const [draw, setDraw] = useState(true);
 
-  const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' });
+  const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
 
   useEffect(() => {
     parsedFileStore.fetchParsedFiles();
@@ -65,9 +65,9 @@ const Constructor = observer(() => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
       component="section"
       //   sx={{ p: 2 }}
@@ -82,7 +82,7 @@ const Constructor = observer(() => {
               sx={{ p: 2, width: 1000 }}
             >
               <hr
-                style={{ height: 1, backgroundColor: 'gray', marginBottom: 16 }}
+                style={{ height: 1, backgroundColor: "gray", marginBottom: 16 }}
               />
               {section.type === SectionType.TEXT ? (
                 <div>
@@ -94,7 +94,7 @@ const Constructor = observer(() => {
                     variant="filled"
                     multiline
                     sx={{
-                      width: '100%',
+                      width: "100%",
                     }}
                   />
                 </div>
@@ -120,7 +120,7 @@ const Constructor = observer(() => {
                       ))}
                     </Select>
                   </FormControl>
-                  {typeof section?.content?.choisenTable === 'number' && (
+                  {typeof section?.content?.choisenTable === "number" && (
                     <FormControl>
                       <InputLabel>Выбор колонок</InputLabel>
                       <Select
@@ -134,8 +134,8 @@ const Constructor = observer(() => {
                         renderValue={(selected) => (
                           <Box
                             sx={{
-                              display: 'flex',
-                              flexWrap: 'wrap',
+                              display: "flex",
+                              flexWrap: "wrap",
                               gap: 0.5,
                             }}
                           >
@@ -188,7 +188,7 @@ const Constructor = observer(() => {
                       ))}
                     </Select>
                   </FormControl>
-                  {typeof section?.content?.choisenTable === 'number' && (
+                  {typeof section?.content?.choisenTable === "number" && (
                     <>
                       <FormControl>
                         <InputLabel>Выбор колонки названий</InputLabel>
@@ -236,7 +236,7 @@ const Constructor = observer(() => {
                   )}
                 </div>
               ) : (
-                ''
+                ""
               )}
               <Button
                 onClick={() => optionStore.removeSection(i)}

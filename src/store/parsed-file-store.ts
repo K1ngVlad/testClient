@@ -1,6 +1,6 @@
-import { makeAutoObservable } from 'mobx';
-import { ParsedFiles } from '../entities';
-import { fakeApi } from '../api';
+import { makeAutoObservable } from "mobx";
+import { ParsedFiles } from "../entities";
+import { fakeApi } from "../api";
 
 class ParsedFileStore {
   parsedFiles: ParsedFiles = [];
@@ -23,6 +23,14 @@ class ParsedFileStore {
       this.isLoading = false;
     }
   };
+
+  addFiels(fiels: any) {
+    console.log(fiels.columns);
+    console.log(fiels.columns[0].columnValues);
+    fiels.length = fiels.columns[0].columnValues.length;
+    console.log(fiels);
+    this.parsedFiles.push(fiels);
+  }
 }
 
 const parsedFileStore = new ParsedFileStore();
