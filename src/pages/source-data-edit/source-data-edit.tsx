@@ -73,8 +73,15 @@ export const SourceDataEdit = observer(() => {
               'https://localhost:7233/api/Filter/getColumnByFilter',
               filters[0]
             )
-            .then((data) => {
-              console.log(data);
+            .then((res) => {
+              console.log(res);
+
+              const data = res.data;
+
+              data.length = 10;
+              data.fileName = data.fileName + ' (обработано)';
+
+              parsedFileStore.addFile(data);
             });
         }}
       >
@@ -121,6 +128,7 @@ export const SourceDataEdit = observer(() => {
                             onClick={() => {
                               setConstructorModal(true);
                               // @ts-ignore
+                              console.log(column.columnName);
                               setCurrentColumnName(column.columnName);
                               // @ts-ignore
                               setCurrentFileName(file.fileName);

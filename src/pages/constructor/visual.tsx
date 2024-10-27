@@ -20,26 +20,34 @@ const Visual: FC<Props> = observer((props) => {
     const table = parsedFileStore.parsedFiles[section.content.choisenTable];
     const sortedValues: any[] = [];
 
-    for (let i = 0; i < table.length; i++) {
-      if (i === 4 && i + 1 < table.length) {
-        const name = 'Другое';
-        let value = 0;
-        for (; i < table.length; i++) {
-          const currentValue =
-            table.columns[section.content.valueCol].columnValues[i];
-          if (currentValue) {
-            value += currentValue;
-          }
-        }
-        sortedValues.push({ name, value });
-        break;
-      } else {
-        const name = table.columns[section.content.nameCol].columnValues[i];
-        const currentValue =
-          table.columns[section.content.valueCol].columnValues[i];
-        const value = currentValue ? currentValue : 0;
-        sortedValues.push({ name, value });
-      }
+    const max = Math.min(table.length, 5);
+
+    for (let i = 0; i < max; i++) {
+      // if (i === 4 && i + 1 < table.length) {
+      //   const name = 'Другое';
+      //   let value = 0;
+      //   for (; i < table.length; i++) {
+      //     const currentValue =
+      //       table.columns[section.content.valueCol].columnValues[i];
+      //     if (currentValue) {
+      //       value += currentValue;
+      //     }
+      //   }
+      //   sortedValues.push({ name, value });
+      //   break;
+      // } else {
+      //   const name = table.columns[section.content.nameCol].columnValues[i];
+      //   const currentValue =
+      //     table.columns[section.content.valueCol].columnValues[i];
+      //   const value = currentValue ? currentValue : 0;
+      //   sortedValues.push({ name, value });
+      // }
+
+      const name = table.columns[section.content.nameCol].columnValues[i];
+      const currentValue =
+        table.columns[section.content.valueCol].columnValues[i];
+      const value = currentValue ? currentValue : 0;
+      sortedValues.push({ name, value });
     }
 
     sortedValues.sort((a, b) => b.value - a.value);

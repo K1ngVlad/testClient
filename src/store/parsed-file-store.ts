@@ -37,6 +37,10 @@ class ParsedFileStore {
     this.parsedFiles = fiels;
     //this.parsedFiles.push(fiels);
   }
+
+  addFile(file: any) {
+    this.parsedFiles.push(file);
+  }
 }
 
 const parsedFileStore = new ParsedFileStore();
