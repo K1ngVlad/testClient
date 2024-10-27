@@ -36,11 +36,11 @@ class FakeApi {
       columns: [
         {
           columnName: 'ID',
-          values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          columnValues: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         },
         {
           columnName: 'Имя',
-          values: [
+          columnValues: [
             'Влад',
             'Максим',
             'Валера',
@@ -53,7 +53,7 @@ class FakeApi {
         },
         {
           columnName: 'Фамилия',
-          values: [
+          columnValues: [
             'Влад',
             'Максим',
             'Валера',
@@ -66,7 +66,7 @@ class FakeApi {
         },
         {
           columnName: 'Часы в доте',
-          values: [32, 4234, 12324, 43, 0, 99, 100],
+          columnValues: [32, 4234, 12324, 43, 0, 99, 100],
         },
       ],
     },
@@ -76,11 +76,13 @@ class FakeApi {
       columns: [
         {
           columnName: 'ID',
-          values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+          columnValues: [
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+          ],
         },
         {
           columnName: 'Имя',
-          values: [
+          columnValues: [
             'Самосвал',
             'Вагон',
             'Паровоз',
@@ -96,18 +98,18 @@ class FakeApi {
         },
         {
           columnName: 'Максимальная скороть',
-          values: [32, 4234, 12324, 43, 0, 99, 100, 1321, 304, 110, 230],
+          columnValues: [32, 4234, 12324, 43, 0, 99, 100, 1321, 304, 110, 230],
         },
         {
           columnName: 'Количество колёс',
-          values: [
+          columnValues: [
             32, 22, 45, 33, 867, 234, 125, 645, 234, 35, 236, 66, 44, 23, 645,
             1234,
           ],
         },
         {
           columnName: 'Материал',
-          values: [
+          columnValues: [
             'Металл',
             'Адамантий',
             'Дерево',

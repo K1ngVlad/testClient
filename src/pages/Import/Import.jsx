@@ -1,7 +1,8 @@
-import { Button, MenuItem, Stack } from "@mui/material";
-import axios from "axios";
-import { FC, useState } from "react";
-import { parsedFileStore } from "../../store";
+import { Button, MenuItem, Stack } from '@mui/material';
+import axios from 'axios';
+import { FC, useState } from 'react';
+import { parsedFileStore } from '../../store';
+import Snackbar from '@mui/material/Snackbar';
 
 const Import = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -9,6 +10,8 @@ const Import = () => {
   const add = (event) => {
     console.log(event.target.files);
     setSelectedFiles((files) => [...files, event.target.files[0]]);
+    event.target.type = 'text';
+    event.target.type = 'file';
   };
 
   const submit = async (event) => {
@@ -17,23 +20,24 @@ const Import = () => {
     const formData = new FormData();
 
     selectedFiles.forEach((file) => {
-      formData.append("files", file);
+      formData.append('files', file);
     });
 
     //axios.get("https://localhost:7233/api/import");
 
     const data = await axios.post(
-      "https://localhost:7233/api/import",
+      'https://localhost:7233/api/import',
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       }
     );
-    console.log(data);
 
     parsedFileStore.addFiels(data.data);
+
+    setSelectedFiles([]);
   };
 
   const deleteFile = (i) => {
@@ -52,14 +56,14 @@ const Import = () => {
             style={{
               height: 300,
               width: 300,
-              position: "relative",
+              position: 'relative',
             }}
           >
             <input
               style={{
-                width: "100%",
-                height: "100%",
-                cursor: "pointer",
+                width: '100%',
+                height: '100%',
+                cursor: 'pointer',
               }}
               accept=".csv"
               onChange={add}
@@ -67,72 +71,85 @@ const Import = () => {
             />
             <div
               style={{
-                position: "absolute",
+                position: 'absolute',
                 top: 0,
                 left: 0,
-                width: "100%",
-                height: "100%",
-                background: "grey",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
+                width: '100%',
+                height: '100%',
+                background: 'grey',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
                 fontSize: 20,
-                textAlign: "center",
-                pointerEvents: "none",
+                textAlign: 'center',
+                pointerEvents: 'none',
               }}
             >
               Нажмите сюда или перенесите файлы
             </div>
           </div>
-          <h1>Выбранные файлы</h1>
-          <hr />
-          <div>
-            <Stack
-              sx={{
-                width: 500,
-              }}
-            >
-              {selectedFiles.map((file, i) => (
-                <MenuItem
+          {selectedFiles.length ? (
+            <>
+              <h1>Выбранные файлы</h1>
+              <hr />
+              <div>
+                <Stack
                   sx={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "space-between",
+                    width: 500,
                   }}
-                  key={Math.random()}
                 >
-                  <span
-                    style={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {file.name}
-                  </span>
-                  <Button
-                    style={{
-                      marginLeft: 20,
-                    }}
-                    onClick={() => {
-                      deleteFile(i);
-                    }}
-                    type="button"
-                    variant="outlined"
-                    color="error"
-                  >
-                    Удалить
-                  </Button>
-                </MenuItem>
-              ))}
-            </Stack>
-          </div>
-          <hr />
-          <Button type="submit" variant="contained">
-            Отправить
-          </Button>
+                  {selectedFiles.map((file, i) => (
+                    <MenuItem
+                      sx={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                      key={Math.random()}
+                    >
+                      <span
+                        style={{
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      >
+                        {file.name}
+                      </span>
+                      <Button
+                        style={{
+                          marginLeft: 20,
+                        }}
+                        onClick={() => {
+                          deleteFile(i);
+                        }}
+                        type="button"
+                        variant="outlined"
+                        color="error"
+                      >
+                        Удалить
+                      </Button>
+                    </MenuItem>
+                  ))}
+                </Stack>
+              </div>
+              <hr />
+              <Button type="submit" variant="contained">
+                Отправить
+              </Button>
+            </>
+          ) : (
+            ''
+          )}
         </form>
       </div>
+      {/* <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
+        open={open}
+        onClose={handleClose}
+        message="I love snacks"
+        key={vertical + horizontal}
+      /> */}
     </main>
   );
 };

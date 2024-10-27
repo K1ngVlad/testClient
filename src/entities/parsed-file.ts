@@ -1,6 +1,6 @@
 export type Column = {
   columnName: string;
-  values: any;
+  columnValues: any;
 };
 
 export type ParsedFile = {
