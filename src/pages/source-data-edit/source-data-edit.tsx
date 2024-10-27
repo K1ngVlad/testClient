@@ -15,61 +15,47 @@ import {
     TableHead,
     TableRow, TextField
 } from "@mui/material";
-import {useMemo, useState} from "react";
-
-const mockData = [
-    {
-        fileName: "file 1",
-        columns: [
-            {
-                columnName: "mockColumn1",
-                columnValue: "mockValue1"
-            },
-            {
-                columnName: "mockColumn2",
-                columnValue: "mockValue2"
-            },
-            {
-                columnName: "mockColumn3",
-                columnValue: "mockValue3"
-            },
-        ],
-    },
-    {
-        fileName: "file 2",
-        columns: [
-            {
-                columnName: "mockColumn11",
-                columnValue: "mockValue11"
-            },
-            {
-                columnName: "mockColumn12",
-                columnValue: "mockValue12"
-            },
-        ]
-    }
-];
+import {useEffect, useMemo, useState} from "react";
+import {observer} from "mobx-react-lite";
+import {ParsedFiles} from "../../entities";
+import axios from "axios";
 
 
-export function SourceDataEdit() {
+export const SourceDataEdit = observer(() => {
     const [cosntructorModal, setConstructorModal] = useState(false);
+    const [filters, setFielters] = useState([]);
+    const [currentColumnName, setCurrentColumnName] = useState(null);
+    const [currentFileName, setCurrentFileName] = useState(null);
+    const [currentCondition, setCurrentCondition] = useState(null);
+    const [currentConditionValue, setCurrentConditionValue] = useState();
+
+    const [fiels, setFiles] = useState<ParsedFiles>([]);
+
+    useEffect(() => {
+        axios.get("https://localhost:7233/api/import").then((data) => {
+            setFiles(data.data);
+        });
+    }, []);
 
     const searchOption = useMemo(() => {
         const result: Array<string> = [];
 
-        mockData.forEach((file) => {
+        fiels.forEach((file) => {
             file.columns.forEach((column) => {
                 result.push(`${file.fileName} ${column.columnName}`);
             })
         });
         console.log(result)
-        return result.map((name) => ({id: v4(), label: name }));
+        return result.map((name) => ({id: v4(), label: name}));
     }, [])
 
     return (
         <div>
+            <Button onClick={() => {
+                // ОТПАРВКА filters
+            }}>Готово</Button>
             <Box component="section" sx={{p: 2, bgcolor: "gray"}}>
-                {mockData.map((file) =>
+                {fiels.map((file) =>
                     <Accordion slotProps={{heading: {component: 'h4'}}}>
                         <AccordionSummary
                             expandIcon={<ExpandLessIcon/>}
@@ -99,13 +85,6 @@ export function SourceDataEdit() {
                                         <TableBody>
                                             <TableRow/>
                                             <TableRow>
-                                                {column.columnValue}
-                                            </TableRow>
-                                            <TableRow/>
-                                        </TableBody>
-                                        <TableBody>
-                                            <TableRow/>
-                                            <TableRow>
                                                 <div style={{
                                                     display: "flex",
                                                     alignItems: "center"
@@ -113,6 +92,10 @@ export function SourceDataEdit() {
                                                     <Button
                                                         onClick={() => {
                                                             setConstructorModal(true);
+                                                            // @ts-ignore
+                                                            setCurrentColumnName(column.columnName);
+                                                            // @ts-ignore
+                                                            setCurrentFileName(file.fileName);
                                                         }}
                                                         variant="contained">{true ? "Редактировать/Удалить связь" : "Добавить связь"}</Button>
                                                     <CheckCircleOutlineIcon color="primary"/>
@@ -142,16 +125,42 @@ export function SourceDataEdit() {
                     <div>
                         {/*Тут информация о том, какие поля уже выбраны и какие операторы с ними используются. Также тут находится кнопка стереть все связи и поиск по типу связей, с якорями чтобы перейти к связе*/}
                         При добавлении хотябы одного связанного поля, появляется информация о связе
-                        <Autocomplete
-                            // TODO Тут посик по полям. формат при вводе и посказках (File 1: ColumnName1)
-                            disablePortal
-                            options={searchOption}
-                            sx={{width: 300}}
-                            renderInput={(params) => <TextField {...params} label="Movie"/>}
-                        />
+                        <Box>
+                            Фильтры
+                            {currentColumnName && <><Autocomplete
+                                onChange={(value) => {
+                                    // @ts-ignore
+                                    setCurrentCondition(value)
+                                }}
+                                disablePortal
+                                options={[
+                                    {id: 0, label: "EQUAL"},
+                                    {id: 1, label: "NOT_EQUAL"},
+                                ]}
+                                sx={{width: 300}}
+                                renderInput={(params) => <TextField {...params} label="Movie"/>}
+                            />
+                                <TextField
+                                    onChange={(value) => {
+                                        // @ts-ignore
+                                        setCurrentConditionValue(value.target.value);
+                                    }}
+                                />
+                                <Button onClick={() => {
+                                    // @ts-ignore
+                                    setFielters([...filters, {
+                                        linkedFileName: currentFileName,
+                                        linkedColumnName: currentColumnName,
+                                        conditionCustomValue: currentConditionValue,
+                                        condition: currentCondition,
+                                    }])
+                                }}>Добавить фильтр</Button>
+                            </>
+                            }
+                        </Box>
                     </div>
                 </Box>
             </Modal>
         </div>
     )
-}
+});

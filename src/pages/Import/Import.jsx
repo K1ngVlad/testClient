@@ -31,7 +31,6 @@ const Import = () => {
         },
       }
     );
-    console.log(data);
 
     parsedFileStore.addFiels(data.data);
   };
