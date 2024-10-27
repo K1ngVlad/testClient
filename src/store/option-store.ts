@@ -35,6 +35,7 @@ class OptionStore {
             choisenTable: '',
             nameCol: null,
             valueCol: null,
+            hasOther: true,
           },
           id,
         });
@@ -90,6 +91,13 @@ class OptionStore {
       } else {
         section.content.choisenCols = [colIndex];
       }
+    }
+  }
+
+  changeOther(sectionIndex: number) {
+    const section = this.sections[sectionIndex];
+    if (section.type === SectionType.HISTOGRAM) {
+      section.content.choisenCols = !section.content.choisenCols;
     }
   }
 }
